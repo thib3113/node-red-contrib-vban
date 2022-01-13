@@ -1,0 +1,59 @@
+<script type="text/javascript">
+    RED.nodes.registerType('vban-udp-security', {
+        category: 'VBAN Advanced',
+        defaults: {
+            name: {
+                value: 'Security Gateway',
+                required: false
+            },
+            allowedIps: {
+                value: '192.168.1.0/24',
+                required: true
+            }
+        },
+        inputs: 1,
+        outputs: 2,
+        outputLabels: ['msg', 'errors'],
+        label: function () {
+            return this.name || 'Security Gateway';
+        },
+        labelStyle: function () {
+            return this.name ? 'node_label_italic' : '';
+        }
+    });
+</script>
+
+<script data-template-name="vban-udp-security" type="text/html">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name" />
+    </div>
+    <div class="form-row">
+        <label for="node-input-allowedIps"><i class="fa fa-globe"></i> Allowed IPs</label>
+        <input type="text" id="node-input-allowedIps" placeholder="Allowed IPs" />
+        <small>read documentation if needed</small>
+    </div>
+</script>
+
+<script data-help-name="vban-udp-security" type="text/markdown">
+This node is only here to protect you against requests from unknown ips .
+You need to set the allowed ip .
+
+### Inputs
+
+: payload (object) : the payload .
+: payload.sender (object) : an object representing the sender . (default object coming from node dgram)
+: payload.sender.ip (string) : the sender ip
+
+### Options
+ - allowedIps : Need to be the ip that are allowed to pass this security .
+ You can add multiples ip by separation them by comma `,`, or semi colon `;` .
+ You can also use CIDR notation
+
+### References
+
+This node is not directly linked with VBAN, but I think security is really important, so it's better to include this node, insteed of relying on the customer others nodes .
+This node can totally can replacer by a node checking the ip of the sender.
+
+-   [GitHub wiki](TODO)
+</script>

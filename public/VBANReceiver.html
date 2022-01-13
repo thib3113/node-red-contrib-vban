@@ -1,0 +1,58 @@
+<script type="text/javascript">
+    RED.nodes.registerType('vban-receiver', {
+        category: 'VBAN Advanced',
+        defaults: {
+            name: {
+                value: '',
+                required: false
+            },
+            VBANServerNodeId: {
+                value: '',
+                type: 'vban-server',
+                required: true
+            }
+        },
+        outputs: 1,
+        color: '#93a7c3',
+        paletteLabel: 'VBAN Receiver',
+        label: function () {
+            return this.name || 'vban-receiver';
+        },
+        labelStyle: function () {
+            return this.name ? 'node_label_italic' : '';
+        },
+    });
+</script>
+
+<script data-template-name="vban-receiver" type="text/html">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name" />
+    </div>
+    <div class="form-row">
+        <label for="node-input-VBANServerNodeId"><i class="fa fa-globe"></i> VBAN Server</label>
+        <select id="node-input-VBANServerNodeId">
+            <option value="">Choose...</option>
+        </select>
+    </div>
+</script>
+
+<script data-help-name="vban-receiver" type="text/markdown">
+Receive vban events
+
+### Outputs
+
+1. Standard output
+: payload.packet (object) : Object containing data send though VBAN
+: payload.sender (object) : Object containing sender informations
+
+### Details
+
+This node is used to receive VBAN events . Each events will produce one message
+Feel free to do something with it .
+
+### References
+
+ - [GitHub wiki](TODO)
+
+</script>
