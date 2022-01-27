@@ -1,0 +1,81 @@
+<script type="text/javascript">
+    RED.nodes.registerType('vban-sender', {
+        category: 'VBAN Advanced',
+        defaults: {
+            name: {
+                value: '',
+                required: false
+            },
+            VBANServerNodeId: {
+                value: '',
+                type: 'vban-server',
+                required: true
+            },
+            streamName: {
+                value: '',
+                required: false
+            },
+            address: {
+                value: '',
+                required: false
+            },
+            port: {
+                value: 6980,
+                type: 'number',
+                required: false
+            }
+        },
+        inputs: 1,
+        color: '#93a7c3',
+        paletteLabel: 'VBAN Sender',
+        label: function () {
+            return this.name || 'vban-sender';
+        },
+        labelStyle: function () {
+            return this.name ? 'node_label_italic' : '';
+        },
+    });
+</script>
+
+<script data-template-name="vban-sender" type="text/html">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name" />
+    </div>
+    <div class="form-row">
+        <label for="node-input-VBANServerNodeId"><i class="fa fa-globe"></i> VBAN Server</label>
+        <select id="node-input-VBANServerNodeId">
+            <option value="">Choose...</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-streamName"><i class="fa fa-tag"></i> streamName</label>
+        <input type="text" id="node-input-streamName" placeholder="Stream1" />
+    </div>
+    <div class="form-row">
+        <label for="node-input-address"><i class="fa fa-tag"></i> Destination address</label>
+        <input type="text" id="node-input-address" placeholder="192.168.1.2" />
+    </div>
+    <div class="form-row">
+        <label for="node-input-port"><i class="fa fa-tag"></i> Destination port</label>
+        <input type="number" id="node-input-port" placeholder="6980" />
+    </div>
+</script>
+
+<script data-help-name="vban-sender" type="text/markdown">
+send vban events
+
+### Inputs
+
+1. Standard input ( TODO )
+: payload.packet (object) : Object containing data to send though VBAN
+
+2. Sending text
+: payload.packet (object) : Object containing data to send though VBAN
+: payload.packet.text (string) : the string you want to send
+
+### References
+
+ - [GitHub wiki](TODO)
+
+</script>

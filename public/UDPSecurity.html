@@ -7,10 +7,11 @@
                 required: false
             },
             allowedIps: {
-                value: '192.168.1.0/24',
+                value: '::1 ; 127.0.0.1 ; 192.168.0.0/16 ; 10.0.0.0/8 ; 172.16.0.0/12',
                 required: true
             }
         },
+        icon: 'font-awesome/fa-shield',
         inputs: 1,
         outputs: 2,
         outputLabels: ['msg', 'errors'],
@@ -30,7 +31,7 @@
     </div>
     <div class="form-row">
         <label for="node-input-allowedIps"><i class="fa fa-globe"></i> Allowed IPs</label>
-        <input type="text" id="node-input-allowedIps" placeholder="Allowed IPs" />
+        <input type="text" id="node-input-allowedIps" placeholder="Allowed IPs" /> <br/>
         <small>read documentation if needed</small>
     </div>
 </script>

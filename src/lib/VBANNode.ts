@@ -17,6 +17,9 @@ export class VBANNode<
         }
         return this._server;
     }
+    get serverConfigured(): boolean {
+        return this._server != undefined;
+    }
     private _server?: VBANServer;
 
     protected async init(): Promise<void> {

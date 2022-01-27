@@ -8,7 +8,7 @@
     "start": "node -r source-map-support/register ./build/test.js",
     "build": "yarn public && tsc -p tsconfig.json",
     "build:prod": "yarn public && tsc -p tsconfig.build.json",
-    "public": "rimraf build && yarn copy:html && yarn copy:examples",
+    "public": "rimraf build && yarn copy:html",
     "copy:html": "copyfiles -E -V -u 1 \"./public/**/*\" build/nodes",
     "copy:examples": "copyfiles -E -V -u 1 \"./examples/**/*\" build/examples",
     "test": "jest",
@@ -32,6 +32,7 @@
     "nodes": {
       "vban-server": "build/nodes/VBANServer.js",
       "vban-receiver": "build/nodes/VBANReceiver.js",
+      "vban-sender": "build/nodes/VBANSender.js",
       "vban-udp-security": "build/nodes/UDPSecurity.js"
     }
   },
@@ -50,7 +51,7 @@
   "license": "MIT",
   "dependencies": {
     "ip-address": "^8.1.0",
-    "vban": "^1.0.5"
+    "vban": "^1.0.6"
   },
   "devDependencies": {
     "@types/node": "16.11.9",
@@ -63,7 +64,7 @@
     "eslint-config-prettier": "8.3.0",
     "eslint-plugin-prettier": "4.0.0",
     "husky": "7.0.4",
-    "node-red": "2.1.3",
+    "node-red": "next",
     "node-red-node-test-helper": "0.2.7",
     "prettier": "2.4.1",
     "rimraf": "^3.0.2",

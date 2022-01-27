@@ -3,7 +3,7 @@ import * as REDRegistry from '@node-red/registry';
 import { registerNode } from '../lib/registerNode';
 import { TUDPSecurityNode } from '../types/TUDPSecurityNode';
 import { TUDPSecurityNodeConfig } from '../types/TUDPSecurityNodeConfig';
-import { Address4, Address6, AddressError } from 'ip-address';
+import { Address4, Address6 } from 'ip-address';
 import { TUDPSecurityMsg } from '../types/TUDPSecurityMsg';
 import { NodeMessage } from '@node-red/registry';
 
@@ -15,7 +15,8 @@ class UDPSecurity extends Node<TUDPSecurityNode, TUDPSecurityNodeConfig> {
             //check if it's a valid IPv4
             return new Address4(ip);
         } catch (e) {
-            if (e instanceof AddressError) {
+            //e is not instance of AddressError
+            if ((e as { name: string }).name === 'AddressError') {
                 //maybe it's a valid IPv6
                 return new Address6(ip);
             } else {
