@@ -27,6 +27,15 @@ try {
 
 const _transpile = async (prod = false) => {
     let tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), pkg.name));
+
+    //check if file exist, just in case
+    if (!fs.existsSync(tmpDir)) {
+        tmpDir = path.join(rootPath, 'tmp');
+        if (!fs.existsSync(tmpDir)) {
+            fs.mkdirSync(tmpDir);
+        }
+    }
+
     const tsProject = ts.createProject(`tsconfig${prod ? '.build' : ''}.json`, { outDir: tmpDir });
 
     let build: Stream = tsProject.src();
