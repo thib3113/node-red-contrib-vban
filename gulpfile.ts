@@ -26,7 +26,7 @@ try {
 }
 
 const _transpile = async (prod = false) => {
-    let tmpDir;
+    let tmpDir: string;
     try {
         tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), pkg.name));
     } catch (e) {
@@ -36,6 +36,8 @@ const _transpile = async (prod = false) => {
             if (!fs.existsSync(tmpDir)) {
                 fs.mkdirSync(tmpDir);
             }
+        } else {
+            throw e;
         }
     }
 
