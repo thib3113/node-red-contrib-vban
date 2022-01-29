@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    RED.nodes.registerType('vban-udp-security', {
+    RED.nodes.registerType('@@NODE_NAME', {
         category: 'VBAN Advanced',
         defaults: {
             name: {
@@ -24,7 +24,7 @@
     });
 </script>
 
-<script data-template-name="vban-udp-security" type="text/html">
+<script data-template-name="@@NODE_NAME" type="text/html">
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name" />
@@ -36,7 +36,7 @@
     </div>
 </script>
 
-<script data-help-name="vban-udp-security" type="text/markdown">
+<script data-help-name="@@NODE_NAME" type="text/markdown">
 This node is only here to protect you against requests from unknown ips .
 You need to set the allowed ip .
 

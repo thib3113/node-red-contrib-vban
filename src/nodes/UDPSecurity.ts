@@ -7,6 +7,8 @@ import { Address4, Address6 } from 'ip-address';
 import { TUDPSecurityMsg } from '../types/TUDPSecurityMsg';
 import { NodeMessage } from '@node-red/registry';
 
+const NODE_NAME = 'vban-udp-security';
+
 class UDPSecurity extends Node<TUDPSecurityNode, TUDPSecurityNodeConfig> {
     private ipsAllowed: Array<Address4 | Address6> = [];
 
@@ -91,5 +93,5 @@ class UDPSecurity extends Node<TUDPSecurityNode, TUDPSecurityNodeConfig> {
 }
 
 module.exports = (RED: REDRegistry.NodeAPI) => {
-    registerNode(RED, 'vban-udp-security', UDPSecurity);
+    registerNode(RED, NODE_NAME, UDPSecurity);
 };

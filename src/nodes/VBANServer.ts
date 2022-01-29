@@ -5,6 +5,8 @@ import { registerNode } from '../lib/registerNode';
 import { EServicePINGApplicationType, EServicePINGFeatures, VBANServer } from 'vban';
 import { TVBANServerNodeConfig } from '../types/TVBANServerNodeConfig';
 
+const NODE_NAME = 'vban-server';
+
 class VBANServerNode extends TechnicalNode<TVBANServerNode, TVBANServerNodeConfig> {
     protected async init(): Promise<void> {
         await super.init();
@@ -53,5 +55,5 @@ class VBANServerNode extends TechnicalNode<TVBANServerNode, TVBANServerNodeConfi
 }
 
 module.exports = (RED: NodeAPI) => {
-    registerNode(RED, 'vban-server', VBANServerNode);
+    registerNode(RED, NODE_NAME, VBANServerNode);
 };

@@ -18,16 +18,15 @@ Doesn't forget to allow only some senders, and doesn't accept packet from all ip
 ## Developpers / Contributing
 Adding nodes to this library is pretty easy .
 
-First of all, be sure to have a ready node-red environnement (follow install tutorial), then clone the repos and install it in node-red config directory with a local module `npm i /home/thib3113/repo/` .
+First, be sure to have a ready node-red environnement (follow install tutorial), then clone the repos and install it in node-red config directory with a local module `npm i /home/thib3113/repo/` .
 
 Then, you can create a new node, you can check the example of `VBANReceiver` :
-```
-- create a ts file in src/nodes
-  - create a classe extending Node
-  - export a function that will call the function "registerNode"
-- create an html file with the same name as the ts file (without the extension)
-- configure the package.json node-red part to add your node
-```
+* Run the command : `gulp createNode --n=my-node-name` (replace `my-node-name` by your node name, using kebab-case)
+* A file `MyNodeName.ts` will be created in `src/nodes` (`MyNodeName``is the PascalCase version of ``my-node-name)
+    * check it parents to check the functions available for your node
+    * type of the node will be in `src/types/TMyNodeNameNode.ts` (part that will be exported to other nodes)
+    * typed config/definition for the node will be in `src/types/TMyNodeNameNodeConfig.ts`
+* A file `MyNodeName.html` will be created in `src/nodes`, it's the configuration UI part of your node, where you can set the option you need (doesn't forget to add them to `src/types/TMyNodeNameNodeConfig.ts` too)
 
 This library use the nodejs library VBAN, feel free to read the documentation [here](https://thib3113.github.io/vban/) .
 

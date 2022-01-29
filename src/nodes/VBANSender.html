@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    RED.nodes.registerType('vban-sender', {
+    RED.nodes.registerType('@@NODE_NAME', {
         category: 'VBAN Advanced',
         defaults: {
             name: {
@@ -31,7 +31,7 @@
         color: '#93a7c3',
         paletteLabel: 'VBAN Sender',
         label: function () {
-            return this.name || 'vban-sender';
+            return this.name || '@@NODE_NAME';
         },
         labelStyle: function () {
             return this.name ? 'node_label_italic' : '';
@@ -39,7 +39,7 @@
     });
 </script>
 
-<script data-template-name="vban-sender" type="text/html">
+<script data-template-name="@@NODE_NAME" type="text/html">
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name" />
@@ -64,7 +64,7 @@
     </div>
 </script>
 
-<script data-help-name="vban-sender" type="text/markdown">
+<script data-help-name="@@NODE_NAME" type="text/markdown">
 send vban events
 
 ### Inputs
