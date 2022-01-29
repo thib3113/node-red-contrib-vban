@@ -14,8 +14,11 @@ const buildDirectory = 'build';
 const srcDirectory = 'src';
 
 const rootPath = path.resolve(__dirname);
-let pkg: { name: string; 'node-red'?: { nodes?: Record<string, string>; [key: string]: unknown } };
 const packageJsonPath = path.join(rootPath, 'package.json');
+const srcDirectoryPath = path.join(rootPath, srcDirectory);
+const NODE_NAME_REG = '[a-z][a-z0-9\\-]';
+
+let pkg: { name: string; 'node-red'?: { nodes?: Record<string, string>; [key: string]: unknown } };
 try {
     pkg = JSON.parse(fs.readFileSync(packageJsonPath).toString());
 } catch (e) {
@@ -64,6 +67,69 @@ export const clean = async () => {
     });
 };
 
+export const createNode = async () => {
+    if (process.argv[2] != 'createNode') {
+        throw new Error('please use "gulp createNode -n=my-new-node');
+    }
+
+    const nodeName = (process.argv[3] || '').slice(3);
+    if (!nodeName) {
+        throw new Error('please use "gulp createNode -n=my-new-node');
+    }
+    if (!nodeName.match(new RegExp(`^${NODE_NAME_REG}+$`))) {
+        throw new Error('please use kebab-case for the name of your node : my-new-node');
+    }
+
+    const kebabCase = nodeName;
+    const camelCase = nodeName
+        .split('-')
+        .map((word) => word.charAt(0).toUpperCase() + word.toLowerCase().slice(1))
+        .join('');
+
+    //check node files
+    const templateBasePath = path.join(rootPath, '.github', 'gulp-templates', 'new-node');
+    const templateNodesFiles = [
+        { file: 'name.ts', destination: 'nodes' },
+        { file: 'name.html', destination: 'nodes' },
+        { file: 'TNameNode.ts', destination: 'types' },
+        { file: 'TNameNodeConfig.ts', destination: 'types' }
+    ].map((f) => ({
+        file: path.join(templateBasePath, f.file),
+        destination: path.join(srcDirectoryPath, f.destination)
+    }));
+
+    templateNodesFiles.forEach(({ file }) => {
+        if (!fs.existsSync(file)) {
+            throw new Error(`file ${file} is missing`)!;
+        }
+    });
+
+    const files = templateNodesFiles.map<{ filename: string; filePath: string; content: string }>(({ file, destination }) => {
+        let content = fs.readFileSync(file).toString();
+        content = content.replace(/@@CAMEL_NODE_NAME/g, camelCase).replace(/@@KEBAB_NODE_NAME/g, kebabCase);
+
+        // get filename
+        const filename = path.basename(file).replace(/name/i, camelCase.charAt(0).toUpperCase() + camelCase.slice(1));
+        const filePath = path.join(destination, filename);
+
+        return {
+            filename,
+            filePath,
+            content
+        };
+    });
+
+    //check if filePath already exist, else write it
+    files.map((file) => {
+        if (fs.existsSync(file.filePath)) {
+            throw new Error(`${file.filePath} already exist, maybe this node name is already used ?`);
+        }
+
+        // console.log('write', file.content, 'to', file.filePath);
+        fs.writeFileSync(file.filePath, file.content);
+    });
+};
+
 export const transpile = async () => _transpile(false);
 export const transpileProd = async () => _transpile(true);
 
@@ -90,7 +156,9 @@ export const nameNodes = async () => {
             }
 
             //search node-name in js
-            const res = /const\s*NODE_NAME\s*=\s*['"`]([a-zAZ0-9\-_]+)['"`]/gm.exec(fs.readFileSync(jsPath).toString() || '');
+            const res = new RegExp(`const\\s*NODE_NAME\\s*=\\s*['"\`](${NODE_NAME_REG}+)['"\`]`, 'gm').exec(
+                fs.readFileSync(jsPath).toString() || ''
+            );
             if (!res) {
                 throw new Error(
                     `fail to found the string containing the NODE_NAME on ${jsPath}. Searched for :
