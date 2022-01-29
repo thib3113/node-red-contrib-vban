@@ -38,6 +38,8 @@ export interface IPacket {
     //TODO add AUDIO and SERVICE
 }
 
+const NODE_NAME = 'vban-sender';
+
 class VBANSender extends VBANNode<TVBANSenderNode, TVBANSenderNodeConfig> {
     protected async init(): Promise<void> {
         await super.init();
@@ -198,5 +200,5 @@ class VBANSender extends VBANNode<TVBANSenderNode, TVBANSenderNodeConfig> {
 }
 
 module.exports = (RED: REDRegistry.NodeAPI) => {
-    registerNode(RED, 'vban-sender', VBANSender);
+    registerNode(RED, NODE_NAME, VBANSender);
 };

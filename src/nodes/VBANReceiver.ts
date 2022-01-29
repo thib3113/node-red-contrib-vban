@@ -5,6 +5,8 @@ import { registerNode } from '../lib/registerNode';
 import { VBANNode } from '../lib/VBANNode';
 import { ENodeStatus } from '../lib/ENodeStatus';
 
+const NODE_NAME = 'vban-receiver';
+
 class VBANReceiver extends VBANNode<TVBANReceiverNode, TVBANReceiverNodeConfig> {
     protected async init(): Promise<void> {
         await super.init();
@@ -25,5 +27,5 @@ class VBANReceiver extends VBANNode<TVBANReceiverNode, TVBANReceiverNodeConfig> 
 }
 
 module.exports = (RED: REDRegistry.NodeAPI) => {
-    registerNode(RED, 'vban-receiver', VBANReceiver);
+    registerNode(RED, NODE_NAME, VBANReceiver);
 };

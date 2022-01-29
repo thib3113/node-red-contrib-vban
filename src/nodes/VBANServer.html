@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    RED.nodes.registerType('vban-server', {
+    RED.nodes.registerType('@@NODE_NAME', {
         category: 'config',
         defaults: {
             name: {
@@ -24,7 +24,7 @@
     });
 </script>
 
-<script data-template-name="vban-server" type="text/html">
+<script data-template-name="@@NODE_NAME" type="text/html">
     <div class="form-row">
         <label for="node-config-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-config-input-name" placeholder="Name" />
@@ -39,7 +39,7 @@
     </div>
 </script>
 
-<script data-help-name="vban-server" type="text/markdown">
+<script data-help-name="@@NODE_NAME" type="text/markdown">
     This is the configuration node, that will configure the VBAN Server (and client)
 
 
