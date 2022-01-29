@@ -26,13 +26,16 @@ try {
 }
 
 const _transpile = async (prod = false) => {
-    let tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), pkg.name));
-
-    //check if file exist, just in case
-    if (!fs.existsSync(tmpDir)) {
-        tmpDir = path.join(rootPath, 'tmp');
-        if (!fs.existsSync(tmpDir)) {
-            fs.mkdirSync(tmpDir);
+    let tmpDir;
+    try {
+        tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), pkg.name));
+    } catch (e) {
+        if (process.env.CI) {
+            //if fail in a CI (like GitHub actions)
+            tmpDir = path.join(rootPath, 'tmp');
+            if (!fs.existsSync(tmpDir)) {
+                fs.mkdirSync(tmpDir);
+            }
         }
     }
 
