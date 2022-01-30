@@ -1,20 +1,25 @@
-import { TVBANReceiverNode } from '../types/TVBANReceiverNode';
-import { TVBANReceiverNodeConfig } from '../types/TVBANReceiverNodeConfig';
 import * as REDRegistry from '@node-red/registry';
 import { registerNode } from '../lib/registerNode';
-import { VBANNode } from '../lib/VBANNode';
-import { ENodeStatus } from '../lib/ENodeStatus';
+import { TReceiveTextNode } from '../types/TReceiveTextNode';
+import { TReceiveTextNodeConfig } from '../types/TReceiveTextNodeConfig';
 import { Receiver } from '../lib/Receiver';
+import { ENodeStatus } from '../lib/ENodeStatus';
+import { VBANNode } from '../lib/VBANNode';
+import { ESubProtocol } from 'vban';
 
-const NODE_NAME = 'vban-receiver';
+const NODE_NAME = 'vban-receive-text';
 
-class VBANReceiver extends VBANNode<TVBANReceiverNode, TVBANReceiverNodeConfig> {
+class ReceiveText extends VBANNode<TReceiveTextNode, TReceiveTextNodeConfig> {
     private receiver?: Receiver;
     protected async init(): Promise<void> {
         await super.init();
 
         if (this.serverConfigured) {
-            this.receiver = new Receiver(this.server);
+            this.receiver = new Receiver(this.server, {
+                subProtocol: ESubProtocol.TEXT,
+                allowedIps: this.definition.allowedIps,
+                streamName: this.definition.streamName
+            });
             this.receiver.on('message', (packet, sender) => {
                 this.send({
                     payload: {
@@ -30,5 +35,5 @@ class VBANReceiver extends VBANNode<TVBANReceiverNode, TVBANReceiverNodeConfig> 
 }
 
 module.exports = (RED: REDRegistry.NodeAPI) => {
-    registerNode(RED, NODE_NAME, VBANReceiver);
+    registerNode(RED, NODE_NAME, ReceiveText);
 };

@@ -1,38 +1,38 @@
 [
     {
-        "id": "ee28ba4b800851a3",
+        "id": "f285f877ce578997",
         "type": "tab",
-        "label": "Receive Service Example",
+        "label": "Receive Audio Example",
         "disabled": false,
         "info": "",
         "env": []
     },
     {
-        "id": "16dc86e5bab031db",
+        "id": "758c91eab6065705",
         "type": "vban-receiver",
-        "z": "ee28ba4b800851a3",
+        "z": "f285f877ce578997",
         "name": "",
         "VBANServerNodeId": "",
         "x": 330,
         "y": 300,
-        "wires": [["ecebec9820f8646f"]]
+        "wires": [["1a82f499373189d7"]]
     },
     {
-        "id": "ecebec9820f8646f",
-        "type": "vban-udp-security",
-        "z": "ee28ba4b800851a3",
+        "id": "1a82f499373189d7",
+        "type": "vban-ip-filter",
+        "z": "f285f877ce578997",
         "name": "",
         "allowedIps": "::1 ; 127.0.0.1 ; 192.168.0.0/16 ; 10.0.0.0/8 ; 172.16.0.0/12",
-        "x": 600,
+        "x": 590,
         "y": 300,
-        "wires": [["17bf3e69dbdfc25e"], ["c82d372822d966d5"]]
+        "wires": [["98162d224574c9c0"], ["aa2af4edd0f3093f"]]
     },
     {
-        "id": "17bf3e69dbdfc25e",
+        "id": "98162d224574c9c0",
         "type": "function",
-        "z": "ee28ba4b800851a3",
+        "z": "f285f877ce578997",
         "name": "",
-        "func": "// 0x60 === SERVICE\nif(msg.payload.packet.subProtocol === 0x60) {\n    return msg\n}",
+        "func": "// 0x00 === AUDIO\nif(msg.payload.packet.subProtocol === 0x00) {\n    return msg\n}",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -40,12 +40,12 @@
         "libs": [],
         "x": 860,
         "y": 280,
-        "wires": [["91375206d9e21204"]]
+        "wires": [["47b4a2c43d32664f"]]
     },
     {
-        "id": "91375206d9e21204",
+        "id": "47b4a2c43d32664f",
         "type": "debug",
-        "z": "ee28ba4b800851a3",
+        "z": "f285f877ce578997",
         "name": "",
         "active": true,
         "tosidebar": true,
@@ -60,9 +60,9 @@
         "wires": []
     },
     {
-        "id": "c82d372822d966d5",
+        "id": "aa2af4edd0f3093f",
         "type": "debug",
-        "z": "ee28ba4b800851a3",
+        "z": "f285f877ce578997",
         "name": "",
         "active": true,
         "tosidebar": true,
@@ -77,53 +77,43 @@
         "wires": []
     },
     {
-        "id": "61ccc225db2818e2",
+        "id": "18c9d1ec337472f0",
         "type": "comment",
-        "z": "ee28ba4b800851a3",
+        "z": "f285f877ce578997",
         "name": "receive VBAN event",
         "info": "",
         "x": 350,
-        "y": 240,
+        "y": 260,
         "wires": []
     },
     {
-        "id": "e53b52bac39fb867",
+        "id": "e2abb338c33974ac",
         "type": "comment",
-        "z": "ee28ba4b800851a3",
+        "z": "f285f877ce578997",
         "name": "check the sender ip",
         "info": "",
-        "x": 570,
+        "x": 630,
         "y": 340,
         "wires": []
     },
     {
-        "id": "238dfd03384a7abb",
+        "id": "51560afba7a8586b",
         "type": "comment",
-        "z": "ee28ba4b800851a3",
-        "name": "filter on subProtocol (SERVICE / 0x60)",
+        "z": "f285f877ce578997",
+        "name": "filter on subProtocol (AUDIO / 0x00)",
         "info": "",
         "x": 940,
         "y": 240,
         "wires": []
     },
     {
-        "id": "33d03f7168c7ff93",
+        "id": "fee3b9d43b10729a",
         "type": "comment",
-        "z": "ee28ba4b800851a3",
-        "name": "only SERVICE packet comes here",
+        "z": "f285f877ce578997",
+        "name": "only AUDIO packet comes here",
         "info": "",
         "x": 1270,
         "y": 240,
-        "wires": []
-    },
-    {
-        "id": "4c4073026b06bc43",
-        "type": "comment",
-        "z": "7cce810b9954db47",
-        "name": "Note about SERVICE packet",
-        "info": "Just little note about this kind of packet .\n\nThis packet are mainly used when two VBAN applications try to recognize them . So, lot of time, it's just a ping, with a ping response . \n\nThe server will automaticaly respond to pings, you doesn't need to do it manually .",
-        "x": 390,
-        "y": 140,
         "wires": []
     }
 ]

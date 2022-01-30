@@ -10,12 +10,13 @@ import rimraf from 'rimraf';
 import glob from 'glob';
 import { Stream } from 'stream';
 
-const buildDirectory = 'build';
-const srcDirectory = 'src';
+const BASE_NODE_NAME = 'vban-';
+const BUILD_DIRECTORY = 'build';
+const SRC_DIRECTORY = 'src';
 
 const rootPath = path.resolve(__dirname);
 const packageJsonPath = path.join(rootPath, 'package.json');
-const srcDirectoryPath = path.join(rootPath, srcDirectory);
+const srcDirectoryPath = path.join(rootPath, SRC_DIRECTORY);
 const NODE_NAME_REG = '[a-z][a-z0-9\\-]';
 
 let pkg: { name: string; 'node-red'?: { nodes?: Record<string, string>; [key: string]: unknown } };
@@ -54,13 +55,13 @@ const _transpile = async (prod = false) => {
         }
     });
     if (prod) {
-        build = build.pipe(tsProject()).pipe(gulp.dest(buildDirectory));
+        build = build.pipe(tsProject()).pipe(gulp.dest(BUILD_DIRECTORY));
     } else {
         build = build
             .pipe(sourcemaps.init())
             .pipe(tsProject())
             .pipe(sourcemaps.write('.', { includeContent: false, sourceRoot: './' }))
-            .pipe(gulp.dest(buildDirectory));
+            .pipe(gulp.dest(BUILD_DIRECTORY));
     }
     return new Promise((resolve, reject) => {
         build.once('error', (e) => reject(e));
@@ -72,7 +73,7 @@ const _transpile = async (prod = false) => {
 
 export const clean = async () => {
     return new Promise<void>((resolve, reject) => {
-        rimraf(buildDirectory, (err) => {
+        rimraf(BUILD_DIRECTORY, (err) => {
             if (err) {
                 return reject(err);
             }
@@ -91,10 +92,10 @@ export const createNode = async () => {
         throw new Error('please use "gulp createNode -n=my-new-node');
     }
     if (!nodeName.match(new RegExp(`^${NODE_NAME_REG}+$`))) {
-        throw new Error('please use kebab-case for the name of your node : my-new-node');
+        throw new Error(`please use kebab-case for the name of your node : my-new-node . You passed ${nodeName}`);
     }
 
-    const kebabCase = nodeName;
+    const kebabCase = BASE_NODE_NAME + nodeName;
     const camelCase = nodeName
         .split('-')
         .map((word) => word.charAt(0).toUpperCase() + word.toLowerCase().slice(1))
@@ -103,10 +104,10 @@ export const createNode = async () => {
     //check node files
     const templateBasePath = path.join(rootPath, '.github', 'gulp-templates', 'new-node');
     const templateNodesFiles = [
-        { file: 'name.ts', destination: 'nodes' },
-        { file: 'name.html', destination: 'nodes' },
-        { file: 'TNameNode.ts', destination: 'types' },
-        { file: 'TNameNodeConfig.ts', destination: 'types' }
+        { file: 'name.ts.template', destination: 'nodes' },
+        { file: 'name.html.template', destination: 'nodes' },
+        { file: 'TNameNode.ts.template', destination: 'types' },
+        { file: 'TNameNodeConfig.ts.template', destination: 'types' }
     ].map((f) => ({
         file: path.join(templateBasePath, f.file),
         destination: path.join(srcDirectoryPath, f.destination)
@@ -123,7 +124,10 @@ export const createNode = async () => {
         content = content.replace(/@@CAMEL_NODE_NAME/g, camelCase).replace(/@@KEBAB_NODE_NAME/g, kebabCase);
 
         // get filename
-        const filename = path.basename(file).replace(/name/i, camelCase.charAt(0).toUpperCase() + camelCase.slice(1));
+        const filename = path
+            .basename(file)
+            .replace(/name/i, camelCase.charAt(0).toUpperCase() + camelCase.slice(1))
+            .replace(/\.template$/, '');
         const filePath = path.join(destination, filename);
 
         return {
@@ -149,14 +153,14 @@ export const transpileProd = async () => _transpile(true);
 
 export const movePublic = () => {
     return gulp
-        .src(`${srcDirectory}/**/*.html`)
-        .pipe(gulp.src(`${srcDirectory}/**/icons/**`))
-        .pipe(gulp.dest(buildDirectory));
+        .src(`${SRC_DIRECTORY}/**/*.html`)
+        .pipe(gulp.src(`${SRC_DIRECTORY}/**/icons/**`))
+        .pipe(gulp.dest(BUILD_DIRECTORY));
 };
 
 export const nameNodes = async () => {
     //first search for the js file in the <build folder>/nodes
-    const files = glob.sync(`${buildDirectory}/nodes/*.js`, {
+    const files = glob.sync(`${BUILD_DIRECTORY}/nodes/*.js`, {
         cwd: rootPath
     }) as Array<string>;
     const nodes = await Promise.all<{ jsPath: string; htmlPath: string; nodeName: string }>(

@@ -1,13 +1,13 @@
 import * as REDRegistry from '@node-red/registry';
 import { TechnicalNode } from './TechnicalNode';
-import { TNodeConfig } from '../types/TNodeConfig';
+import { TVBANNodeConfig } from '../types/TVBANNodeConfig';
 import { ENodeStatus } from './ENodeStatus';
 import { TSendMessage } from '../types/TSendMessage';
 import { NodeStatus } from '@node-red/registry';
 
 export class Node<
     TNode extends REDRegistry.Node<TCredentials> = any,
-    TNodeDefinition extends TNodeConfig = TNodeConfig,
+    TNodeDefinition extends TVBANNodeConfig = TVBANNodeConfig,
     TCredentials = any
 > extends TechnicalNode<TNode, TNodeDefinition, TCredentials> {
     protected lastStatus?: NodeStatus & { status: ENodeStatus };

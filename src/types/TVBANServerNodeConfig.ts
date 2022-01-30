@@ -1,6 +1,8 @@
-import { TNodeConfig } from './TNodeConfig';
+import { TVBANNodeConfig } from './TVBANNodeConfig';
 
-export type TVBANServerNodeConfig = TNodeConfig & {
+export type TVBANServerNodeConfig = TVBANNodeConfig & {
     port: number;
     address: string;
+    allowedIPs?: string;
+    autoReplyToPing?: boolean;
 };

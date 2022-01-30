@@ -1,0 +1,64 @@
+[
+    {
+        "id": "0be98ef4641e100a",
+        "type": "tab",
+        "label": "Send Text Example",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "9e9d81e3b4778836",
+        "type": "vban-sender",
+        "z": "0be98ef4641e100a",
+        "name": "",
+        "VBANServerNodeId": "",
+        "streamName": "",
+        "address": "",
+        "port": "",
+        "x": 530,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "9481533cd2a88cbf",
+        "type": "inject",
+        "z": "0be98ef4641e100a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"packet\":{\"subProtocol\":\"TXT\",\"text\":\"recorder.load=\\\"C:\\\\\\\\soundboard\\\\text.wav\\\";recorder.Play=1;\"}}",
+        "payloadType": "json",
+        "x": 110,
+        "y": 240,
+        "wires": [["9e9d81e3b4778836"]]
+    },
+    {
+        "id": "e389df06da431adf",
+        "type": "comment",
+        "z": "0be98ef4641e100a",
+        "name": "create an example packet, that will play a .wav file on the destination",
+        "info": "",
+        "x": 280,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "9b8aad53dc8b0803",
+        "type": "comment",
+        "z": "0be98ef4641e100a",
+        "name": "Send to a specific destination address/port, with the same streamname, waited by the destination",
+        "info": "",
+        "x": 790,
+        "y": 280,
+        "wires": []
+    }
+]

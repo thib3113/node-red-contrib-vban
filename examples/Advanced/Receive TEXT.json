@@ -1,6 +1,6 @@
 [
     {
-        "id": "ee28ba4b800851a3",
+        "id": "f1e7fd77e114d902",
         "type": "tab",
         "label": "Receive Text Example",
         "disabled": false,
@@ -8,40 +8,29 @@
         "env": []
     },
     {
-        "id": "16dc86e5bab031db",
+        "id": "8da3b003ac708e5a",
         "type": "vban-receiver",
-        "z": "ee28ba4b800851a3",
+        "z": "f1e7fd77e114d902",
         "name": "",
         "VBANServerNodeId": "",
         "x": 330,
         "y": 300,
-        "wires": [
-            [
-                "ecebec9820f8646f"
-            ]
-        ]
+        "wires": [["e900fb332f048d32"]]
     },
     {
-        "id": "ecebec9820f8646f",
-        "type": "vban-udp-security",
-        "z": "ee28ba4b800851a3",
+        "id": "e900fb332f048d32",
+        "type": "vban-ip-filter",
+        "z": "f1e7fd77e114d902",
         "name": "",
         "allowedIps": "::1 ; 127.0.0.1 ; 192.168.0.0/16 ; 10.0.0.0/8 ; 172.16.0.0/12",
-        "x": 600,
+        "x": 590,
         "y": 300,
-        "wires": [
-            [
-                "17bf3e69dbdfc25e"
-            ],
-            [
-                "c82d372822d966d5"
-            ]
-        ]
+        "wires": [["e9a924df53cff516"], ["ac3e8e327af22312"]]
     },
     {
-        "id": "17bf3e69dbdfc25e",
+        "id": "e9a924df53cff516",
         "type": "function",
-        "z": "ee28ba4b800851a3",
+        "z": "f1e7fd77e114d902",
         "name": "",
         "func": "// 0x40 === TEXT\nif(msg.payload.packet.subProtocol === 0x40) {\n    return msg\n}",
         "outputs": 1,
@@ -51,16 +40,12 @@
         "libs": [],
         "x": 860,
         "y": 280,
-        "wires": [
-            [
-                "91375206d9e21204"
-            ]
-        ]
+        "wires": [["91bf2ed04b657faf"]]
     },
     {
-        "id": "91375206d9e21204",
+        "id": "91bf2ed04b657faf",
         "type": "debug",
-        "z": "ee28ba4b800851a3",
+        "z": "f1e7fd77e114d902",
         "name": "",
         "active": true,
         "tosidebar": true,
@@ -75,9 +60,9 @@
         "wires": []
     },
     {
-        "id": "c82d372822d966d5",
+        "id": "ac3e8e327af22312",
         "type": "debug",
-        "z": "ee28ba4b800851a3",
+        "z": "f1e7fd77e114d902",
         "name": "",
         "active": true,
         "tosidebar": true,
@@ -92,29 +77,29 @@
         "wires": []
     },
     {
-        "id": "61ccc225db2818e2",
+        "id": "6a3719997d40b851",
         "type": "comment",
-        "z": "ee28ba4b800851a3",
+        "z": "f1e7fd77e114d902",
         "name": "receive VBAN event",
         "info": "",
         "x": 350,
-        "y": 240,
+        "y": 260,
         "wires": []
     },
     {
-        "id": "e53b52bac39fb867",
+        "id": "4597d9a7c87010de",
         "type": "comment",
-        "z": "ee28ba4b800851a3",
+        "z": "f1e7fd77e114d902",
         "name": "check the sender ip",
         "info": "",
-        "x": 570,
+        "x": 630,
         "y": 340,
         "wires": []
     },
     {
-        "id": "238dfd03384a7abb",
+        "id": "2ba4560878de30ea",
         "type": "comment",
-        "z": "ee28ba4b800851a3",
+        "z": "f1e7fd77e114d902",
         "name": "filter on subProtocol (TEXT / 0x40)",
         "info": "",
         "x": 940,
@@ -122,9 +107,9 @@
         "wires": []
     },
     {
-        "id": "33d03f7168c7ff93",
+        "id": "bbc59510e348b5bb",
         "type": "comment",
-        "z": "ee28ba4b800851a3",
+        "z": "f1e7fd77e114d902",
         "name": "only TEXT packet comes here",
         "info": "",
         "x": 1270,

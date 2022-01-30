@@ -13,13 +13,32 @@
             port: {
                 value: '6980',
                 required: false
-            }
+            },
+            autoReplyToPing: {
+                value: true,
+                required: false
+            },
+            allowedIPs: {
+                value: '::1 ; 127.0.0.1 ; 192.168.0.0/16 ; 10.0.0.0/8 ; 172.16.0.0/12',
+                required: false
+            },
         },
         label: function () {
             return this.name || 'VBAN Server Configuration';
         },
         labelStyle: function () {
             return this.name ? 'node_label_italic' : '';
+        },
+        oneditprepare: function () {
+            $typedBool = $('#node-autoReplyToPingInput');
+            $typedBool.typedInput({
+                type: 'bool',
+                types: ['bool']
+            })
+            $typedBool.typedInput('value', $('#node-config-input-autoReplyToPing').get(0).checked? 'true' : 'false');
+        },
+        oneditsave: function () {
+            $('#node-config-input-autoReplyToPing').prop('checked', $('#node-autoReplyToPingInput').val() === 'true');
         }
     });
 </script>
@@ -37,13 +56,28 @@
         <label for="node-config-input-port"><i class="fa fa-user"></i> Binding port</label>
         <input type="text" id="node-config-input-port" placeholder="Binding port" />
     </div>
+    <div class="form-row">
+        <label for="node-config-input-allowedIPs"><i class="fa fa-user"></i> Allowed IPs</label>
+        <input type="text" id="node-config-input-allowedIPs" placeholder="list of allowed IPS" /> <br>
+    </div>
+    <div class="form-row">
+        <label for="node-autoReplyToPingInput"><i class="fa fa-globe"></i> auto reply to ping</label>
+        <input type="text" id="node-autoReplyToPingInput" />
+        <input type="checkbox" style="display:none;" id="node-config-input-autoReplyToPing" />
+    </div>
 </script>
 
 <script data-help-name="@@NODE_NAME" type="text/markdown">
     This is the configuration node, that will configure the VBAN Server (and client)
 
+### Options
+ * Binding address : will be the interface where the server will listen . default is 0.0.0.0 "all interfaces"
+ * Port : the port used . By default, Voicemeeter use same port for listening, and to send to another instance, so, default is 6980
+ * Allowed IPs : Only packet receive from one of this CIDR will be analysed. ( by default, it covers local network )
+ * autoReplyToPingInput : If you want to manually reply to the other server, you can set this to false
 
 ### References
 
+ - [Security  Or  Allowed IPs](https://github.com/thib3113/node-red-contrib-vban/wiki/Security---Allowed-IPs)
  - [GitHub wiki](TODO)
 </script>

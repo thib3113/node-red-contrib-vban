@@ -1,0 +1,3 @@
+import { TVBANNodeConfig } from './TVBANNodeConfig';
+
+export type T@@CAMEL_NODE_NAMENodeConfig = TVBANNodeConfig;

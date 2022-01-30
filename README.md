@@ -4,7 +4,7 @@
 
 Some examples are available directly in node-red : `Menu => Import => Examples => node-red-contrib-vlan`
 
-And you can get more informations in the [Examples folder](https://github.com/thib3113/node-red-contrib-vban/tree/main/examples)
+And you can get more information in the [Examples folder](https://github.com/thib3113/node-red-contrib-vban/tree/main/examples)
 
 ---
 

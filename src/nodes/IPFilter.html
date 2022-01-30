@@ -3,7 +3,7 @@
         category: 'VBAN Advanced',
         defaults: {
             name: {
-                value: 'Security Gateway',
+                value: 'Filter',
                 required: false
             },
             allowedIps: {
@@ -16,7 +16,7 @@
         outputs: 2,
         outputLabels: ['msg', 'errors'],
         label: function () {
-            return this.name || 'Security Gateway';
+            return this.name || 'Filter';
         },
         labelStyle: function () {
             return this.name ? 'node_label_italic' : '';
@@ -48,13 +48,13 @@ You need to set the allowed ip .
 
 ### Options
  - allowedIps : Need to be the ip that are allowed to pass this security .
- You can add multiples ip by separation them by comma `,`, or semi colon `;` .
- You can also use CIDR notation
 
 ### References
 
 This node is not directly linked with VBAN, but I think security is really important, so it's better to include this node, insteed of relying on the customer others nodes .
 This node can totally can replacer by a node checking the ip of the sender.
 
--   [GitHub wiki](TODO)
+ - [IPs notation](https://github.com/thib3113/node-red-contrib-vban/wiki/IPs-notation)
+ - [Security  Or  Allowed IPs](https://github.com/thib3113/node-red-contrib-vban/wiki/Security---Allowed-IPs)
+ - [GitHub wiki](TODO)
 </script>
