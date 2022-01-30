@@ -1,5 +1,5 @@
 import * as REDRegistry from '@node-red/registry';
-import { TNodeConfig } from '../types/TNodeConfig';
+import { TVBANNodeConfig } from '../types/TVBANNodeConfig';
 import { ENodeStatus } from './ENodeStatus';
 import { TSendMessage } from '../types/TSendMessage';
 import { VBANServer } from 'vban';
@@ -8,7 +8,7 @@ import { Node } from './Node';
 
 export class VBANNode<
     TNode extends REDRegistry.Node<TCredentials> = any,
-    TNodeDefinition extends TNodeConfig = TNodeConfig,
+    TNodeDefinition extends TVBANNodeConfig = TVBANNodeConfig,
     TCredentials = any
 > extends Node<TNode, TNodeDefinition, TCredentials> {
     get server(): VBANServer {

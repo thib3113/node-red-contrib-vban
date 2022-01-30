@@ -26,8 +26,10 @@
     "MT-128"
   ],
   "node-red": {
+    "version": ">=2.1.0",
     "nodes": {
-      "vban-udp-security": "build/nodes/UDPSecurity.js",
+      "vban-ip-filter": "build/nodes/IPFilter.js",
+      "vban-receive-text": "build/nodes/ReceiveText.js",
       "vban-receiver": "build/nodes/VBANReceiver.js",
       "vban-sender": "build/nodes/VBANSender.js",
       "vban-server": "build/nodes/VBANServer.js"
@@ -48,7 +50,7 @@
   "license": "MIT",
   "dependencies": {
     "ip-address": "^8.1.0",
-    "vban": "^1.0.6"
+    "vban": "^1.1.0"
   },
   "devDependencies": {
     "@types/gulp": "^4.0.9",

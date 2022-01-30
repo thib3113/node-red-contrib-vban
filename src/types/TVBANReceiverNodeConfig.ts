@@ -1,3 +1,3 @@
-import { TNodeConfig } from './TNodeConfig';
+import { TVBANNodeConfig } from './TVBANNodeConfig';
 
-export type TVBANReceiverNodeConfig = TNodeConfig;
+export type TVBANReceiverNodeConfig = TVBANNodeConfig;

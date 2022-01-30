@@ -4,12 +4,19 @@ import { TVBANServerNode } from '../types/TVBANServerNode';
 import { registerNode } from '../lib/registerNode';
 import { EServicePINGApplicationType, EServicePINGFeatures, VBANServer } from 'vban';
 import { TVBANServerNodeConfig } from '../types/TVBANServerNodeConfig';
+import { Security } from '../lib/Security';
 
 const NODE_NAME = 'vban-server';
 
 class VBANServerNode extends TechnicalNode<TVBANServerNode, TVBANServerNodeConfig> {
+    private security?: Security;
     protected async init(): Promise<void> {
         await super.init();
+
+        if (this.definition.allowedIPs) {
+            this.security = new Security(this.definition.allowedIPs);
+        }
+
         //prepare VBAN Server
         this.node.server = new VBANServer({
             application: {
@@ -18,10 +25,12 @@ class VBANServerNode extends TechnicalNode<TVBANServerNode, TVBANServerNodeConfi
                     blue: 0,
                     green: 0
                 },
-                applicationName: 'Node-RED VBAN',
+                applicationName: this.definition.name ?? 'Node-RED VBAN',
                 applicationType: EServicePINGApplicationType.SERVER,
                 features: [EServicePINGFeatures.MIDI, EServicePINGFeatures.SERIAL, EServicePINGFeatures.TXT]
-            }
+            },
+            autoReplyToPing: this.definition.autoReplyToPing ?? true,
+            beforeProcessPacket: this.definition.allowedIPs ? (_msg, sender) => this.security?.check(sender.address) || false : () => true
         });
 
         this.node.startVBANServer = async () => {

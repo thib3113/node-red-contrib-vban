@@ -2,7 +2,7 @@
     {
         "id": "ee28ba4b800851a3",
         "type": "tab",
-        "label": "Receive Audio Example",
+        "label": "Receive Service Example",
         "disabled": false,
         "info": "",
         "env": []
@@ -15,47 +15,32 @@
         "VBANServerNodeId": "",
         "x": 330,
         "y": 300,
-        "wires": [
-            [
-                "ecebec9820f8646f"
-            ]
-        ]
+        "wires": [["ecebec9820f8646f"]]
     },
     {
         "id": "ecebec9820f8646f",
-        "type": "vban-udp-security",
+        "type": "vban-ip-filter",
         "z": "ee28ba4b800851a3",
         "name": "",
         "allowedIps": "::1 ; 127.0.0.1 ; 192.168.0.0/16 ; 10.0.0.0/8 ; 172.16.0.0/12",
-        "x": 600,
+        "x": 590,
         "y": 300,
-        "wires": [
-            [
-                "17bf3e69dbdfc25e"
-            ],
-            [
-                "c82d372822d966d5"
-            ]
-        ]
+        "wires": [["17bf3e69dbdfc25e"], ["c82d372822d966d5"]]
     },
     {
         "id": "17bf3e69dbdfc25e",
         "type": "function",
         "z": "ee28ba4b800851a3",
         "name": "",
-        "func": "// 0x00 === AUDIO\nif(msg.payload.packet.subProtocol === 0x00) {\n    return msg\n}",
+        "func": "// 0x60 === SERVICE\nif(msg.payload.packet.subProtocol === 0x60) {\n    return msg\n}",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 860,
+        "x": 840,
         "y": 280,
-        "wires": [
-            [
-                "91375206d9e21204"
-            ]
-        ]
+        "wires": [["91375206d9e21204"]]
     },
     {
         "id": "91375206d9e21204",
@@ -87,7 +72,7 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 850,
+        "x": 830,
         "y": 440,
         "wires": []
     },
@@ -98,7 +83,7 @@
         "name": "receive VBAN event",
         "info": "",
         "x": 350,
-        "y": 240,
+        "y": 260,
         "wires": []
     },
     {
@@ -107,7 +92,7 @@
         "z": "ee28ba4b800851a3",
         "name": "check the sender ip",
         "info": "",
-        "x": 570,
+        "x": 630,
         "y": 340,
         "wires": []
     },
@@ -115,9 +100,9 @@
         "id": "238dfd03384a7abb",
         "type": "comment",
         "z": "ee28ba4b800851a3",
-        "name": "filter on subProtocol (AUDIO / 0x00)",
+        "name": "filter on subProtocol (SERVICE / 0x60)",
         "info": "",
-        "x": 940,
+        "x": 930,
         "y": 240,
         "wires": []
     },
@@ -125,10 +110,20 @@
         "id": "33d03f7168c7ff93",
         "type": "comment",
         "z": "ee28ba4b800851a3",
-        "name": "only AUDIO packet comes here",
+        "name": "only SERVICE packet comes here",
         "info": "",
-        "x": 1270,
+        "x": 1280,
         "y": 240,
+        "wires": []
+    },
+    {
+        "id": "52775858283cf6d3",
+        "type": "comment",
+        "z": "ee28ba4b800851a3",
+        "name": "Note about SERVICE packet",
+        "info": "Just little note about this kind of packet .\n\nThis packet are mainly used when two VBAN applications try to recognize them . So, lot of time, it's just a ping, with a ping response . \n\nThe server will automaticaly respond to pings, you doesn't need to do it manually .",
+        "x": 380,
+        "y": 460,
         "wires": []
     }
 ]
