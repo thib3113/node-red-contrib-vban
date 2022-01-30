@@ -87,7 +87,7 @@ export const createNode = async () => {
         throw new Error('please use "gulp createNode -n=my-new-node');
     }
 
-    const nodeName = (process.argv[3] || '').slice(4);
+    const nodeName = (process.argv[3] || '').slice(3);
     if (!nodeName) {
         throw new Error('please use "gulp createNode -n=my-new-node');
     }

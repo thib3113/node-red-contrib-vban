@@ -30,6 +30,7 @@
     "nodes": {
       "vban-ip-filter": "build/nodes/IPFilter.js",
       "vban-receive-text": "build/nodes/ReceiveText.js",
+      "vban-send-text": "build/nodes/SendText.js",
       "vban-receiver": "build/nodes/VBANReceiver.js",
       "vban-sender": "build/nodes/VBANSender.js",
       "vban-server": "build/nodes/VBANServer.js"
@@ -80,7 +81,7 @@
     "typescript": "4.5.2"
   },
   "engines": {
-    "node": ">=10.22.1"
+    "node": ">=14.17.1"
   },
   "files": [
     "/build",

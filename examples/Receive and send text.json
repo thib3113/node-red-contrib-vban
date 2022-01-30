@@ -1,0 +1,185 @@
+[
+  {
+    "id": "39e2d526952d9466",
+    "type": "tab",
+    "label": "Flow 3",
+    "disabled": false,
+    "info": "",
+    "env": []
+  },
+  {
+    "id": "54350908fa0bfced",
+    "type": "vban-receive-text",
+    "z": "39e2d526952d9466",
+    "name": "Receive Text",
+    "allowedIPs": "::1 ; 127.0.0.1 ; 192.168.0.0/16 ; 10.0.0.0/8 ; 172.16.0.0/12",
+    "streamName": "Command1",
+    "VBANServerNodeId": "",
+    "x": 210,
+    "y": 540,
+    "wires": [
+      [
+        "5572c80e73c8d61a",
+        "4ec9be9163062563",
+        "b5016e56a676b4e8"
+      ]
+    ]
+  },
+  {
+    "id": "5572c80e73c8d61a",
+    "type": "vban-send-text",
+    "z": "39e2d526952d9466",
+    "name": "Send Text",
+    "streamName": "Command1",
+    "VBANServerNodeId": "",
+    "address": "",
+    "port": "6980",
+    "x": 980,
+    "y": 540,
+    "wires": []
+  },
+  {
+    "id": "129694ab423fc02f",
+    "type": "inject",
+    "z": "39e2d526952d9466",
+    "name": "",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "",
+    "payloadType": "date",
+    "x": 720,
+    "y": 460,
+    "wires": [
+      [
+        "5572c80e73c8d61a"
+      ]
+    ]
+  },
+  {
+    "id": "3233f7f75489c44e",
+    "type": "comment",
+    "z": "39e2d526952d9466",
+    "name": "Send Custom text",
+    "info": "",
+    "x": 750,
+    "y": 420,
+    "wires": []
+  },
+  {
+    "id": "f2297572b25b396b",
+    "type": "comment",
+    "z": "39e2d526952d9466",
+    "name": "Receive text",
+    "info": "",
+    "x": 210,
+    "y": 500,
+    "wires": []
+  },
+  {
+    "id": "4ec9be9163062563",
+    "type": "debug",
+    "z": "39e2d526952d9466",
+    "name": "",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 430,
+    "y": 680,
+    "wires": []
+  },
+  {
+    "id": "2b6a979a8308a714",
+    "type": "comment",
+    "z": "39e2d526952d9466",
+    "name": "show the full text packet",
+    "info": "",
+    "x": 460,
+    "y": 640,
+    "wires": []
+  },
+  {
+    "id": "b5016e56a676b4e8",
+    "type": "debug",
+    "z": "39e2d526952d9466",
+    "name": "",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "payload.packet.text",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 470,
+    "y": 780,
+    "wires": []
+  },
+  {
+    "id": "1ab5c375e604f263",
+    "type": "comment",
+    "z": "39e2d526952d9466",
+    "name": "show only the text received",
+    "info": "",
+    "x": 470,
+    "y": 740,
+    "wires": []
+  },
+  {
+    "id": "a33c7b28811fd5be",
+    "type": "comment",
+    "z": "39e2d526952d9466",
+    "name": "Text will be send to another VBAN Receiver",
+    "info": "",
+    "x": 1090,
+    "y": 500,
+    "wires": []
+  },
+  {
+    "id": "17b1e0c9c1cd6672",
+    "type": "inject",
+    "z": "39e2d526952d9466",
+    "name": "Play Soundboard",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "recorder.load=\"C:\\\\soundboard\\text.wav\";recorder.Play=1;",
+    "payloadType": "str",
+    "x": 740,
+    "y": 340,
+    "wires": [
+      [
+        "5572c80e73c8d61a"
+      ]
+    ]
+  },
+  {
+    "id": "5c813c3d04df8699",
+    "type": "comment",
+    "z": "39e2d526952d9466",
+    "name": "Send a command",
+    "info": "",
+    "x": 740,
+    "y": 300,
+    "wires": []
+  }
+]
