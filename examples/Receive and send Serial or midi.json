@@ -1,0 +1,149 @@
+[
+  {
+    "id": "989c57073e1685c4",
+    "type": "tab",
+    "label": "Flow 2",
+    "disabled": false,
+    "info": "",
+    "env": []
+  },
+  {
+    "id": "5c34bfc85b39c7b7",
+    "type": "vban-receive-midi-or-serial",
+    "z": "989c57073e1685c4",
+    "name": "Receive Midi or Serial",
+    "allowedIPs": "::1 ; 127.0.0.1 ; 192.168.0.0/16 ; 10.0.0.0/8 ; 172.16.0.0/12",
+    "streamName": "",
+    "VBANServerNodeId": "",
+    "x": 220,
+    "y": 360,
+    "wires": [
+      [
+        "9d3a30b8ce7c9185",
+        "959b370166f5b576",
+        "a0114bdcc226dd07"
+      ]
+    ]
+  },
+  {
+    "id": "9d3a30b8ce7c9185",
+    "type": "debug",
+    "z": "989c57073e1685c4",
+    "name": "",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "payload.packet.data",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 530,
+    "y": 640,
+    "wires": []
+  },
+  {
+    "id": "959b370166f5b576",
+    "type": "debug",
+    "z": "989c57073e1685c4",
+    "name": "",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "false",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 490,
+    "y": 540,
+    "wires": []
+  },
+  {
+    "id": "a0114bdcc226dd07",
+    "type": "vban-send-midi-or-serial",
+    "z": "989c57073e1685c4",
+    "name": "Send Midi or Serial",
+    "streamName": "MIDI1",
+    "VBANServerNodeId": "",
+    "address": "",
+    "port": "",
+    "x": 1050,
+    "y": 360,
+    "wires": []
+  },
+  {
+    "id": "9e1a1abc09abbe81",
+    "type": "inject",
+    "z": "989c57073e1685c4",
+    "name": "",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "[176,2,106]",
+    "payloadType": "bin",
+    "x": 790,
+    "y": 260,
+    "wires": [
+      [
+        "a0114bdcc226dd07"
+      ]
+    ]
+  },
+  {
+    "id": "461505410e23bbfb",
+    "type": "comment",
+    "z": "989c57073e1685c4",
+    "name": "Send a buffer manually",
+    "info": "",
+    "x": 840,
+    "y": 220,
+    "wires": []
+  },
+  {
+    "id": "2f8813a069affe2e",
+    "type": "comment",
+    "z": "989c57073e1685c4",
+    "name": "Receive MIDI",
+    "info": "",
+    "x": 190,
+    "y": 320,
+    "wires": []
+  },
+  {
+    "id": "d212c4a7cb960c91",
+    "type": "comment",
+    "z": "989c57073e1685c4",
+    "name": "Show the full packet",
+    "info": "",
+    "x": 510,
+    "y": 500,
+    "wires": []
+  },
+  {
+    "id": "44f7b3dae227accb",
+    "type": "comment",
+    "z": "989c57073e1685c4",
+    "name": "Show only the data in the packet",
+    "info": "",
+    "x": 550,
+    "y": 600,
+    "wires": []
+  },
+  {
+    "id": "3c8c2b26aa69bec1",
+    "type": "comment",
+    "z": "989c57073e1685c4",
+    "name": "MIDI will be send to another VBAN Receiver",
+    "info": "",
+    "x": 1130,
+    "y": 320,
+    "wires": []
+  }
+]

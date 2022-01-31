@@ -1,0 +1,74 @@
+<script type="text/javascript">
+    RED.nodes.registerType('@@NODE_NAME', {
+        category: 'VBAN',
+        defaults: {
+            name: {
+                value: 'Receive Midi or Serial',
+                required: false
+            },
+            allowedIPs: {
+                value: '::1 ; 127.0.0.1 ; 192.168.0.0/16 ; 10.0.0.0/8 ; 172.16.0.0/12',
+                required: true
+            },
+            streamName: {
+                value: '',
+                required: false
+            },
+            VBANServerNodeId: {
+                value: '',
+                type: 'vban-server',
+                required: true
+            }
+        },
+        icon:'vban.png',
+        outputs: 1,
+        paletteLabel: 'Receive Midi or Serial',
+        color: '#93a7c3',
+        label: function () {
+            return this.name || 'Receive Text';
+        },
+        labelStyle: function () {
+            return this.name ? 'node_label_italic' : '';
+        }
+    });
+</script>
+
+<script data-template-name="@@NODE_NAME" type="text/html">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name" />
+    </div>
+    <div class="form-row">
+        <label for="node-input-VBANServerNodeId"><i class="fa fa-globe"></i> VBAN Server</label>
+        <select id="node-input-VBANServerNodeId">
+            <option value="">Choose...</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-allowedIPs"><i class="fa fa-tag"></i> Allowed IPs</label>
+        <input type="text" id="node-input-allowedIPs" placeholder="Name" />
+    </div>
+    <div class="form-row">
+        <label for="node-input-streamName"><i class="fa fa-tag"></i> Stream Name</label>
+        <input type="text" id="node-input-streamName" placeholder="Name" />
+    </div>
+</script>
+
+<script data-help-name="@@NODE_NAME" type="text/markdown">
+    This node allow receiving midi or serial event . But, because MIDI event is a SERIAL event, the difference is not so easy . The either is maybe to "learn" from what the other send, and try to resent the same things .
+
+### Outputs
+
+1. Standard output
+: payload.packet (object) : Object containing data send though VBAN
+: payload.sender (object) : Object containing sender informations
+
+### Options
+ - allowedIps : Need to be the ip that are allowed to pass this security .
+ - streamName : allow filtering only on a specific streamName
+
+### References
+
+ - [IPs notation](https://github.com/thib3113/node-red-contrib-vban/wiki/IPs-notation)
+ - [Security  Or  Allowed IPs](https://github.com/thib3113/node-red-contrib-vban/wiki/Security---Allowed-IPs)
+</script>

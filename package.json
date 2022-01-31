@@ -29,7 +29,9 @@
     "version": ">=2.1.0",
     "nodes": {
       "vban-ip-filter": "build/nodes/IPFilter.js",
+      "vban-receive-midi-or-serial": "build/nodes/ReceiveMidiOrSerial.js",
       "vban-receive-text": "build/nodes/ReceiveText.js",
+      "vban-send-midi-or-serial": "build/nodes/SendMidiOrSerial.js",
       "vban-send-text": "build/nodes/SendText.js",
       "vban-receiver": "build/nodes/VBANReceiver.js",
       "vban-sender": "build/nodes/VBANSender.js",
@@ -51,7 +53,7 @@
   "license": "MIT",
   "dependencies": {
     "ip-address": "^8.1.0",
-    "vban": "^1.1.0"
+    "vban": "^1.2.3"
   },
   "devDependencies": {
     "@types/gulp": "^4.0.9",

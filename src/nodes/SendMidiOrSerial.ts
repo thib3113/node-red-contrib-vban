@@ -1,18 +1,19 @@
 import { VBANNode } from '../lib/VBANNode';
 import * as REDRegistry from '@node-red/registry';
 import { registerNode } from '../lib/registerNode';
-import { TSendTextNode } from '../types/TSendTextNode';
-import { TSendTextNodeConfig } from '../types/TSendTextNodeConfig';
-import { TSendTextMsg } from '../types/TSendTextMsg';
+import { TSendMidiOrSerialNode } from '../types/TSendMidiOrSerialNode';
+import { TSendMidiOrSerialNodeConfig } from '../types/TSendMidiOrSerialNodeConfig';
+import { IPacket, Sender } from '../lib/Sender';
 import { ENodeStatus } from '../lib/ENodeStatus';
-import { Sender } from '../lib/Sender';
-import { ESubProtocol } from 'vban';
 import { NodeMessageInFlow } from 'node-red';
+import { ESerialStreamType, ESubProtocol } from 'vban';
+import { TSendSerialMsg } from '../types/TSendSerialMsg';
 
-const NODE_NAME = 'vban-send-text';
+const NODE_NAME = 'vban-send-midi-or-serial';
 
-class SendText extends VBANNode<TSendTextNode, TSendTextNodeConfig> {
+class SendMidiOrSerial extends VBANNode<TSendMidiOrSerialNode, TSendMidiOrSerialNodeConfig> {
     private sender?: Sender;
+
     protected async init(): Promise<void> {
         await super.init();
 
@@ -28,19 +29,25 @@ class SendText extends VBANNode<TSendTextNode, TSendTextNodeConfig> {
     setListener() {
         this.node.on('input', (msg: NodeMessageInFlow, _send, done) => {
             try {
-                const payload = (msg as TSendTextMsg).payload;
-                let text = '';
-                if (typeof payload === 'string' || typeof payload === 'number') {
-                    text = payload.toString();
-                } else if (typeof payload?.packet?.text === 'string') {
-                    text = payload?.packet?.text;
+                const payload = (msg as TSendSerialMsg).payload;
+                let packet: Partial<IPacket> = {};
+                let data;
+                if (Buffer.isBuffer(payload)) {
+                    data = payload;
+                } else if (payload?.packet?.data && Buffer.isBuffer(payload?.packet?.data)) {
+                    packet = payload?.packet;
+                    data = packet.data;
                 } else {
-                    throw new Error('fail to found text from payload');
+                    throw new Error('fail to found data from payload');
                 }
                 this.sender?.send(
                     {
-                        subProtocol: ESubProtocol.TEXT,
-                        text,
+                        bps: packet.bps,
+                        channelsIdents: packet.channelsIdents,
+                        formatBit: packet.formatBit,
+                        streamType: packet.streamType ?? ESerialStreamType.VBAN_SERIAL_GENERIC,
+                        subProtocol: ESubProtocol.SERIAL,
+                        data,
                         streamName: this.definition.streamName
                     },
                     {
@@ -62,5 +69,5 @@ class SendText extends VBANNode<TSendTextNode, TSendTextNodeConfig> {
 }
 
 module.exports = (RED: REDRegistry.NodeAPI) => {
-    registerNode(RED, NODE_NAME, SendText);
+    registerNode(RED, NODE_NAME, SendMidiOrSerial);
 };
