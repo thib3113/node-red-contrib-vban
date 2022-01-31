@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-vban",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Nodes to interact with vban protocol",
   "main": "build/nodes/vban.js",
   "scripts": {
