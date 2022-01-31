@@ -26,7 +26,7 @@
     "MT-128"
   ],
   "node-red": {
-    "version": ">=2.2.0",
+    "version": ">=1.3.7",
     "nodes": {
       "vban-ip-filter": "build/nodes/IPFilter.js",
       "vban-receive-midi-or-serial": "build/nodes/ReceiveMidiOrSerial.js",
