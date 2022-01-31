@@ -1,5 +1,18 @@
 # node-red-contrib-vban
 
+This node is here to interact with VBAN .
+
+VBAN is a protocol used by VB-Audio software products ( Voicemeeter / VB-Cables / MT-128 and other )
+
+So, you can :
+ * control your node-red from a MIDI keyboard (vban-receive-midi-or-serial)
+ * update a midi keyboard from your node-red (vban-send-midi-or-serial)
+ * Use macro from voicemeeter in node-red ? (vban-receive-text)
+ * Or send a macro to voicemeeter (to play a sound on your computer for example) ? (vban-send-text)
+ * and many others functions
+
+Feel free to open an issue if you have a question
+
 ## Examples
 
 Some examples are available directly in node-red : `Menu => Import => Examples => node-red-contrib-vlan`
