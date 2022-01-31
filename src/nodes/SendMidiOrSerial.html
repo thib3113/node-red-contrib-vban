@@ -3,7 +3,7 @@
         category: 'VBAN',
         defaults: {
             name: {
-                value: 'Send Text',
+                value: 'Send Midi or Serial',
                 required: false
             },
             streamName: {
@@ -28,10 +28,10 @@
         icon:'vban.png',
         inputs: 1,
         align: 'right',
+        paletteLabel: 'Send Midi or Serial',
         color: '#93a7c3',
-        paletteLabel: 'Send Text',
         label: function () {
-            return this.name || 'Send Text';
+            return this.name || 'Send Midi or Serial';
         },
         labelStyle: function () {
             return this.name ? 'node_label_italic' : '';
@@ -65,5 +65,5 @@
 </script>
 
 <script data-help-name="@@NODE_NAME" type="text/markdown">
-    This node can be used to send text to a VBAN receiver
+    TODO write documentation
 </script>

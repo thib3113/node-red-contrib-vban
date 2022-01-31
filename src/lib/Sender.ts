@@ -98,8 +98,13 @@ export class Sender {
                         formatBit: EFormatBit.VBAN_DATATYPE_BYTE8,
                         streamType: this.getSerialStreamType(packet.streamType),
                         bps: packet.bps as number,
-                        bitMode: packet.bitMode as ISerialBitMode,
-                        sr: packet.sr as number,
+                        //add default bitMode
+                        bitMode: packet.bitMode ?? {
+                            stop: 1,
+                            start: false,
+                            parity: false,
+                            multipart: false
+                        },
                         channelsIdents: packet.channelsIdents as number
                     },
                     packet.data
@@ -111,7 +116,7 @@ export class Sender {
                     {
                         formatBit: EFormatBit.VBAN_DATATYPE_BYTE8,
                         streamName: packet.streamName,
-                        streamType: packet.encoding ?? ETextEncoding.VBAN_TXT_UTF8
+                        encoding: packet.encoding ?? ETextEncoding.VBAN_TXT_UTF8
                     },
                     packet.text
                 );
