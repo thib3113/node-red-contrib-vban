@@ -33,6 +33,9 @@ class VBANServerNode extends TechnicalNode<TVBANServerNode, TVBANServerNodeConfi
             beforeProcessPacket: this.definition.allowedIPs ? (_msg, sender) => this.security?.check(sender.address) || false : () => true
         });
 
+        //disable maxListeners, so each nodes can listen
+        this.node.server.setMaxListeners(0);
+
         this.node.startVBANServer = async () => {
             if (this.node.startVBANServerPromise) {
                 await this.node.startVBANServerPromise;

@@ -4,6 +4,7 @@ import {
     ESubProtocol,
     ETextEncoding,
     ISerialBitMode,
+    VBANAudioPacket,
     VBANPacket,
     VBANSerialPacket,
     VBANServer,
@@ -30,7 +31,13 @@ export interface IPacket {
     //text specifics
     text?: string;
     encoding?: ETextEncoding;
-    //TODO add AUDIO and SERVICE
+    //TODO add SERVICE
+
+    //audio
+    nbSample?: number;
+    nbChannel?: number;
+    bitResolution?: number;
+    codec?: number;
 }
 
 export class Sender {
@@ -85,7 +92,15 @@ export class Sender {
         let returnPacket: VBANPacket;
         switch (this.getSubProtocol(packet.subProtocol)) {
             case ESubProtocol.AUDIO:
-                throw new Error(`"${packet.subProtocol}" NOT YET IMPLEMENTED`);
+                //do the checks
+                if (!packet.data) {
+                    throw new Error('data are mandatory');
+                }
+
+                returnPacket = new VBANAudioPacket(
+                    { bitResolution: 0, codec: 0, nbChannel: 0, nbSample: 0, sr: 0, ...packet },
+                    packet.data
+                );
                 break;
             case ESubProtocol.SERIAL:
                 if (!packet.data) {
@@ -138,7 +153,7 @@ export class Sender {
             port: number;
         }
     ) {
-        if (!packet.subProtocol) {
+        if (!packet.subProtocol && packet.subProtocol !== ESubProtocol.AUDIO) {
             const text = 'packet need to contain a subProtocol';
             throw new CustomError(text, { packet });
         }

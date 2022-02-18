@@ -6,6 +6,7 @@ import { NodeMessageInFlow } from 'node-red';
 import { TVBANSenderNode } from '../types/TVBANSenderNode';
 import { TVBANSenderNodeConfig } from '../types/TVBANSenderNodeConfig';
 import { IPacket, Sender } from '../lib/Sender';
+import { ESubProtocol } from 'vban';
 
 const NODE_NAME = 'vban-sender';
 
@@ -62,7 +63,7 @@ class VBANSender extends VBANNode<TVBANSenderNode, TVBANSenderNodeConfig> {
         }
 
         const { packet } = payload;
-        if (!packet.subProtocol) {
+        if (!packet.subProtocol && packet.subProtocol !== ESubProtocol.AUDIO) {
             const text = 'packet need to contain a subProtocol';
             this.node.error(text, {
                 payload: packet
@@ -70,7 +71,7 @@ class VBANSender extends VBANNode<TVBANSenderNode, TVBANSenderNodeConfig> {
             this.setStatus(ENodeStatus.ERROR, text);
             return;
         }
-        if (!packet.streamName && this.definition.streamName) {
+        if (this.definition.streamName) {
             packet.streamName = this.definition.streamName;
         } else if (!packet.streamName) {
             const text = 'packet need to contain a streamName';
